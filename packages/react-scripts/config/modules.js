@@ -80,7 +80,7 @@ function getWebpackAliases(options = {}) {
 
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
     return {
-      src: paths.appSrc,
+      src: paths.appSrc
     };
   }
 }
@@ -94,7 +94,10 @@ function getJestAliases(options = {}) {
   const baseUrl = options.baseUrl;
 
   if (!baseUrl) {
-    return {};
+    return {
+      // Trying to prevent the use of web-encoding during tests.
+      'web-encoding': 'util'
+    };
   }
 
   const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
@@ -102,6 +105,8 @@ function getJestAliases(options = {}) {
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
     return {
       '^src/(.*)$': '<rootDir>/src/$1',
+      // Trying to prevent the use of web-encoding during tests.
+      'web-encoding': 'util'
     };
   }
 }
